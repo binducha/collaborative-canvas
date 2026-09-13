@@ -99,7 +99,7 @@ The server also keeps the completed drawing operations in memory. Because of thi
 ### 1. Clone the repository
 
 ```bash
-git clone <YOUR_GITHUB_REPOSITORY_URL>
+git clone https://github.com/binducha/collaborative-canvas
 ```
 
 ### 2. Open the project folder
@@ -120,14 +120,6 @@ npm install
 npm start
 ```
 
-After the server starts, open:
-
-```text
-http://localhost:3000
-```
-
-in a browser.
-
 ## Development Mode
 
 During development, the project can also be started using:
@@ -143,7 +135,7 @@ This uses Nodemon, so the Node.js server automatically restarts when server-side
 The easiest way to test the collaborative part is to open the application in two browser windows.
 
 1. Start the server.
-2. Open `http://localhost:3000`.
+2. Open `https://collaborative-canvas-o7a5.onrender.com`.
 3. Open the same URL in another browser window or tab.
 4. Draw something in the first window.
 5. Check whether the drawing appears in the second window.
@@ -316,10 +308,6 @@ The project can be tested using:
 * Google Chrome
 * Mozilla Firefox
 * Safari
-
-## Time Spent
-
-Approximately: `<ADD YOUR ACTUAL TIME HERE>`
 
 ## Possible Future Improvements
 
