@@ -1,11 +1,8 @@
 const operations = [];
 const redoOperations = [];
-
 function addOperation(operation) {
 
     operations.push(operation);
-
-    // New drawing means old redo history is cleared
     redoOperations.length = 0;
 }
 
@@ -25,9 +22,7 @@ function redo() {
     if (redoOperations.length === 0) {
         return;
     }
-
     const operation = redoOperations.pop();
-
     operations.push(operation);
 }
 

@@ -16,15 +16,8 @@ let currentSize = 5;
 
 let lastX = 0;
 let lastY = 0;
-
-
-// Stores the previous point of each remote user
 const remoteUsers = {};
 const remoteCursors = {};
-
-// -----------------------------
-// TOOL BUTTONS
-// -----------------------------
 
 brushButton.addEventListener("click", function () {
 
@@ -52,11 +45,6 @@ sizePicker.addEventListener("input", function (event) {
 
 });
 
-
-// -----------------------------
-// MOUSE EVENTS
-// -----------------------------
-
 canvas.addEventListener("mousedown", startDrawing);
 
 canvas.addEventListener("mousemove", draw);
@@ -65,10 +53,6 @@ canvas.addEventListener("mouseup", stopDrawing);
 
 canvas.addEventListener("mouseout", stopDrawing);
 
-
-// -----------------------------
-// START DRAWING
-// -----------------------------
 
 function startDrawing(event) {
 
@@ -96,11 +80,6 @@ function startDrawing(event) {
     });
 
 }
-
-
-// -----------------------------
-// DRAW
-// -----------------------------
 
 function draw(event) {
 
@@ -137,10 +116,6 @@ function draw(event) {
 }
 
 
-// -----------------------------
-// STOP DRAWING
-// -----------------------------
-
 function stopDrawing() {
 
     if (!isDrawing) {
@@ -152,11 +127,6 @@ function stopDrawing() {
     socket.emit("drawing-end");
 
 }
-
-
-// -----------------------------
-// DRAW POINT
-// -----------------------------
 
 function drawPoint(x, y, color, size, tool) {
 
@@ -188,10 +158,6 @@ function drawPoint(x, y, color, size, tool) {
 
 }
 
-
-// -----------------------------
-// DRAW LINE
-// -----------------------------
 
 function drawLine(
     startX,
@@ -233,11 +199,6 @@ function drawLine(
 
 }
 
-
-// -----------------------------
-// REMOTE USER START
-// -----------------------------
-
 function remoteDrawingStart(data) {
 
     remoteUsers[data.userId] = {
@@ -256,11 +217,6 @@ function remoteDrawingStart(data) {
     );
 
 }
-
-
-// -----------------------------
-// REMOTE USER DRAW
-// -----------------------------
 
 function drawRemote(data) {
 
@@ -286,19 +242,11 @@ function drawRemote(data) {
 }
 
 
-// -----------------------------
-// REMOTE USER STOP
-// -----------------------------
-
 function remoteDrawingEnd(data) {
 
     delete remoteUsers[data.userId];
 
 }
-
-// -----------------------------
-// REMOTE CURSOR
-// -----------------------------
 
 function updateRemoteCursor(data) {
 
@@ -367,8 +315,6 @@ undoButton.addEventListener("click", function () {
 redoButton.addEventListener("click", function () {
     socket.emit("redo");
 });
-
-
 
 function redrawCanvas(operations) {
 

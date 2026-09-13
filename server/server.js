@@ -2,45 +2,25 @@ const path = require("path");
 const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
-
 const {
     addOperation,
     undo,
     redo,
     getOperations
 } = require("./drawing-state");
-
-
 const {
     addUser,
     removeUser,
     getAllUsers
 } = require("./rooms");
-
-
 const app = express();
-
 const server = http.createServer(app);
-
 const io = new Server(server);
-
 const PORT = process.env.PORT || 3000;
-
-
-// Serve the client folder
 app.use(express.static(path.join(__dirname, "../client")));
-
-
 io.on("connection", (socket) => {
-
     let currentStroke = [];
-
-    // -----------------------------
-// CURSOR POSITION
-// -----------------------------
-
 socket.on("cursor-move", function (data) {
-
     const user = getAllUsers().find(
         function (user) {
             return user.id === socket.id;
@@ -58,24 +38,14 @@ socket.on("cursor-move", function (data) {
         color: user.color
     });
 });
-
     console.log("User connected:", socket.id);
-
     console.log("Current socket count:", io.sockets.sockets.size);
-    // Add this socket as a user
     const user = addUser(socket.id);
-    
     console.log("User added:", user);
-
     io.emit("users-update", getAllUsers());
-
     socket.emit("drawing-state", {
     operations: getOperations()
 });
-
-    
-
-
 const currentUsers = getAllUsers();
 
 console.log(
@@ -89,11 +59,6 @@ console.log(
 );
 
 io.emit("users-update", currentUsers);
-
-
-    // --------------------------------
-    // DRAWING START
-    // --------------------------------
 
 socket.on("drawing-start", function (data) {
 
@@ -116,11 +81,6 @@ socket.on("drawing-start", function (data) {
     });
 });
 
-
-    // --------------------------------
-    // DRAWING
-    // --------------------------------
-
      socket.on("drawing", function (data) {
 
     currentStroke.push({
@@ -137,11 +97,6 @@ socket.on("drawing-start", function (data) {
         tool: data.tool
     });
 });
-
-
-    // --------------------------------
-    // DRAWING END
-    // --------------------------------
 
     socket.on("drawing-end", function () {
 
@@ -181,11 +136,6 @@ socket.on("drawing-start", function (data) {
     });
 });
 
-
-    // --------------------------------
-    // DISCONNECT
-    // --------------------------------
-
     socket.on("disconnect", () => {
 
         socket.broadcast.emit("cursor-remove", {
@@ -213,8 +163,6 @@ console.log(
 io.emit("users-update", currentUsers);
 
     });
-
-
     socket.on("request-drawing-state", function () {
 
     socket.emit("drawing-state", {
@@ -224,8 +172,6 @@ io.emit("users-update", currentUsers);
 });
 
 });
-
-
 server.listen(PORT, () => {
 
     console.log(
